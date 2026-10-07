@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f9f6f0">
+<meta name="description" content="A love letter for Tarek — from Maria.">
+<meta name="color-scheme" content="light">
+<title>For Tarek · From Maria</title>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --sage:#b8c4b8;--sage-deep:#93a493;--cream:#f9f6f0;--warm-white:#fdfbf7;
+    --beige:#e8e0d5;--gold:#c9b38b;--gold-light:#e3d5b8;
+    --text:#4a4a3f;--text-soft:#6b6b5c;
+    --serif:'Georgia','Times New Roman',serif;
+    --sans:'Segoe UI','Helvetica Neue',system-ui,-apple-system,sans-serif;
+  }
+  html{font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{
+    font-family:var(--sans);background:var(--cream);color:var(--text);
+    min-height:100dvh;min-height:100vh;
+    overflow:hidden;position:relative;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing:antialiased;
+    overscroll-behavior:none;
+  }
+  @supports (min-height: 100dvh) {
+    body { min-height: 100dvh; }
+  }
+
+  /* ---------- SCENES ---------- */
+  .scene{
+    position:fixed;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:calc(24px + env(safe-area-inset-top, 0px)) 22px calc(24px + env(safe-area-inset-bottom, 0px)) 22px;
+    opacity:0;visibility:hidden;
+    transition:opacity .7s ease,visibility .7s ease;
+    z-index:1;overflow:hidden;
+  }
+  .scene.active{opacity:1;visibility:visible;z-index:10}
+
+  /* ---------- INTRO ---------- */
+  #scene-intro .intro-content{
+    display:flex;flex-direction:column;align-items:center;
+    gap:22px;text-align:center;position:relative;z-index:20
+  }
+  .intro-heart{font-size:3rem;animation:pulseHeart 2.4s ease-in-out infinite;
+    filter:drop-shadow(0 4px 12px rgba(200,160,150,.3))}
+  @keyframes pulseHeart{
+    0%,100%{transform:scale(1)}15%{transform:scale(1.12)}
+    30%{transform:scale(1)}45%{transform:scale(1.08)}
+  }
+  .title-large{font-family:var(--serif);font-size:clamp(1.7rem,6.8vw,2.5rem);
+    font-weight:400;color:var(--text);line-height:1.35}
+  .subtitle{font-size:clamp(.95rem,3.5vw,1.1rem);color:var(--text-soft);
+    line-height:1.65;letter-spacing:.02em}
+  .intro-signature{font-family:var(--serif);font-style:italic;
+    font-size:clamp(.85rem,3.2vw,.98rem);color:var(--text-soft);
+    letter-spacing:.05em;opacity:.9}
+  .intro-signature .name{color:var(--sage-deep);font-style:normal;
+    letter-spacing:.08em;font-weight:500}
+  .intro-line{width:60px;height:1px;background:var(--gold-light)}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    font-family:var(--sans);font-size:clamp(1rem,4vw,1.12rem);font-weight:500;
+    letter-spacing:.04em;padding:18px 40px;border:none;border-radius:60px;
+    cursor:pointer;min-height:60px;min-width:220px;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    -webkit-user-select:none;user-select:none;
+    touch-action:manipulation;
+    transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .25s,opacity .2s;
+    position:relative;pointer-events:auto !important;z-index:100;
+    -webkit-appearance:none;appearance:none;
+    text-decoration:none;
+    color:inherit;
+    line-height:1;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn-primary{
+    background:linear-gradient(145deg,var(--sage),var(--sage-deep));
+    color:var(--warm-white);
+    box-shadow:0 8px 24px rgba(150,160,140,.35),0 2px 6px rgba(150,160,140,.2);
+  }
+  .btn-ghost{
+    background:transparent;color:var(--text-soft);
+    border:1.5px solid var(--beige);font-size:.95rem;
+    min-width:auto;padding:12px 28px;min-height:52px;
+  }
+
+  /* ---------- MESSAGE ---------- */
+  #scene-message .message-content{
+    display:flex;flex-direction:column;align-items:center;
+    gap:26px;max-width:520px;text-align:center;
+    animation:messageFadeIn .9s cubic-bezier(.4,0,.2,1) both;
+    padding:0 4px;
+  }
+  @keyframes messageFadeIn{
+    from{opacity:0;transform:translateY(18px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .message-main{font-family:var(--serif);font-size:clamp(2rem,8vw,2.9rem);
+    color:var(--text);line-height:1.3}
+  .message-reveal{font-size:clamp(1rem,4vw,1.25rem);color:var(--text-soft);
+    line-height:1.7;min-height:2.6em;letter-spacing:.02em}
+
+  /* ---------- SONG LINK ---------- */
+  .song-link{
+    display:inline-flex;align-items:center;gap:10px;
+    margin-top:4px;
+    font-family:var(--sans);font-size:clamp(.95rem,3.8vw,1.05rem);
+    font-weight:500;letter-spacing:.03em;
+    color:var(--sage-deep);
+    text-decoration:none;
+    padding:14px 26px;
+    background:linear-gradient(145deg,var(--warm-white),var(--cream));
+    border:1px solid var(--gold-light);
+    border-radius:50px;
+    box-shadow:0 8px 26px rgba(180,160,130,.28),
+               0 2px 8px rgba(180,160,130,.15);
+    transition:transform .2s ease,box-shadow .25s ease;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+    min-height:52px;
+    -webkit-appearance:none;appearance:none;
+    cursor:pointer;
+    position:relative;
+    z-index:110;
+  }
+  .song-link:active{transform:scale(.96)}
+  .song-link-icon{font-size:1.2rem}
+  .song-link-arrow{font-size:.9em;opacity:.6;margin-left:2px}
+
+  .song-caption{
+    font-family:var(--serif);font-style:italic;
+    font-size:clamp(.8rem,3vw,.9rem);
+    color:var(--text-soft);opacity:.8;letter-spacing:.03em;
+  }
+
+  /* ---------- ENVELOPE ---------- */
+  #scene-envelope .envelope-content{
+    display:flex;flex-direction:column;align-items:center;gap:30px
+  }
+  .title-soft{font-family:var(--serif);font-size:clamp(1.3rem,5vw,1.85rem);
+    font-weight:400;color:var(--text-soft);text-align:center;line-height:1.5}
+  .envelope-wrapper{
+    position:relative;width:min(280px,72vw);aspect-ratio:1.5/1;
+    perspective:900px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .4s ease;
+    touch-action:manipulation;
+  }
+  .envelope-wrapper:active{transform:scale(.98)}
+  .envelope{position:relative;width:100%;height:100%;
+    background:linear-gradient(145deg,#e8e0d5,#d9d0c4);border-radius:6px;
+    box-shadow:0 12px 36px rgba(160,150,130,.3)}
+  .envelope-flap{
+    position:absolute;top:0;left:0;width:100%;height:50%;
+    background:linear-gradient(180deg,#d9d0c4,#cfc5b8);border-radius:6px 6px 0 0;
+    transform-origin:top center;transform:rotateX(0deg);
+    transition:transform .9s cubic-bezier(.4,0,.2,1);z-index:3;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+  }
+  .envelope-flap.open{transform:rotateX(180deg)}
+  .envelope-body{position:absolute;bottom:0;left:0;width:100%;height:60%;
+    background:linear-gradient(180deg,#d9d0c4,#cfc5b8);border-radius:0 0 6px 6px;
+    z-index:2;overflow:hidden}
+  .envelope-letter{
+    position:absolute;bottom:12%;left:8%;width:84%;height:70%;
+    background:var(--warm-white);border-radius:4px;
+    box-shadow:0 4px 16px rgba(160,150,130,.2);
+    transform:translateY(40px) scale(.9);opacity:0;
+    transition:transform .9s cubic-bezier(.4,0,.2,1),opacity .9s cubic-bezier(.4,0,.2,1);
+    z-index:1;display:flex;align-items:center;justify-content:center;padding:16px;
+  }
+  .envelope-letter.revealed{transform:translateY(-70px) scale(1);opacity:1;z-index:4}
+  .envelope-seal{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;
+    background:radial-gradient(circle,#d4c5a8,var(--gold));border-radius:50%;z-index:5;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.7rem;font-family:var(--serif);font-weight:600;
+    letter-spacing:.02em;color:var(--warm-white);
+    box-shadow:0 2px 8px rgba(180,160,120,.4);
+    transition:opacity .5s,transform .5s;
+  }
+  .envelope-seal.hidden{opacity:0;transform:translate(-50%,-50%) scale(.5);pointer-events:none}
+
+  /* ---------- LETTER ---------- */
+  #scene-letter .letter-content{
+    display:flex;flex-direction:column;align-items:center;
+    width:100%;max-width:540px;max-height:88dvh
+  }
+  .letter-paper{
+    background:var(--warm-white);border-radius:14px;padding:32px 24px;
+    box-shadow:0 16px 48px rgba(160,150,130,.2),0 2px 8px rgba(160,150,130,.1);
+    width:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    max-height:68dvh;position:relative;
+    border:1px solid rgba(200,180,140,.15);
+    overscroll-behavior:contain;
+  }
+  .letter-paper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--sage),var(--gold-light),var(--sage));
+    border-radius:14px 14px 0 0}
+  .letter-text{font-family:var(--serif);font-size:clamp(.95rem,3.8vw,1.08rem);
+    line-height:1.9;color:var(--text);letter-spacing:.01em}
+  .letter-text p{margin-bottom:18px}
+  .letter-text .salutation{font-size:1.1em;font-style:italic}
+  .letter-text .salutation .name{font-style:normal;color:var(--sage-deep);
+    font-weight:500;letter-spacing:.04em}
+  .letter-text p:last-child{margin-bottom:0}
+  .letter-signature{font-family:var(--serif);font-style:italic;
+    font-size:clamp(1.05rem,4.2vw,1.3rem);color:var(--text-soft);
+    text-align:right;margin-top:24px;line-height:1.6}
+  .letter-signature .sign-name{display:block;margin-top:8px;font-style:normal;
+    color:var(--sage-deep);font-size:.95em;letter-spacing:.06em;font-weight:500}
+
+  /* ---------- ENDING ---------- */
+  #scene-ending .ending-content{
+    display:flex;flex-direction:column;align-items:center;
+    gap:26px;text-align:center;position:relative;z-index:2;max-width:520px
+  }
+  .ending-message{font-family:var(--serif);font-size:clamp(1.3rem,5.5vw,1.9rem);
+    color:var(--text);line-height:1.5;opacity:0;transform:translateY(12px);
+    transition:opacity 1s ease .4s,transform 1s ease .4s}
+  .ending-message.visible{opacity:1;transform:translateY(0)}
+  .ending-sub{font-size:clamp(.95rem,3.6vw,1.1rem);color:var(--text-soft);
+    letter-spacing:.03em;opacity:0;transition:opacity 1s ease 1s;line-height:1.7}
+  .ending-sub.visible{opacity:1}
+  .ending-names{font-family:var(--serif);font-style:italic;
+    font-size:clamp(.9rem,3.4vw,1.05rem);color:var(--sage-deep);
+    letter-spacing:.08em;opacity:0;transition:opacity 1s ease 1.4s;margin-top:6px}
+  .ending-names.visible{opacity:1}
+  .ending-names .amp{color:var(--gold);font-style:normal;margin:0 6px}
+
+  /* ---------- BALLOONS ---------- */
+  .balloon{position:fixed;bottom:-140px;pointer-events:none;z-index:4;
+    animation:floatBalloon 13s ease-in-out forwards;will-change:transform,opacity}
+  .balloon-body{width:100%;height:80%;
+    border-radius:50% 50% 50% 50%/42% 42% 58% 58%;
+    position:relative;box-shadow:inset -6px -8px 16px rgba(0,0,0,.06)}
+  .balloon-string{position:absolute;bottom:-44px;left:50%;width:1px;height:44px;
+    background:rgba(180,170,150,.55);transform:translateX(-50%)}
+  @keyframes floatBalloon{
+    0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0}
+    8%{opacity:1}
+    50%{transform:translateY(-55vh) translateX(24px) rotate(5deg);opacity:1}
+    100%{transform:translateY(-130vh) translateX(-16px) rotate(-4deg);opacity:0}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (min-width:600px){.letter-paper{padding:40px 36px}}
+  @media (min-width:900px){.scene{padding:40px}}
+
+  @media (max-width:360px){
+    .btn{min-width:180px;padding:16px 28px;font-size:.98rem}
+    .song-link{padding:12px 20px;font-size:.92rem}
+    .title-large{font-size:1.55rem}
+    .message-main{font-size:1.7rem}
+  }
+
+  @media (max-height:500px) and (orientation:landscape){
+    .intro-heart{font-size:2rem}
+    .title-large{font-size:1.3rem}
+    .subtitle{font-size:.85rem}
+    .btn{min-height:48px;padding:12px 24px;min-width:180px}
+    .message-main{font-size:1.5rem}
+    .letter-paper{max-height:60dvh;padding:20px 18px}
+    .envelope-wrapper{width:min(220px,50vw)}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+      animation-duration:.01ms !important;animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+    .balloon{display:none !important}
+    .intro-heart{animation:none !important}
+  }
+
+  .letter-paper::-webkit-scrollbar{width:3px}
+  .letter-paper::-webkit-scrollbar-track{background:transparent}
+  .letter-paper::-webkit-scrollbar-thumb{background:var(--beige);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO ============ -->
+<section id="scene-intro" class="scene active" aria-label="Introduction">
+  <div class="intro-content">
+    <div class="intro-heart" aria-hidden="true">🤍</div>
+    <h1 class="title-large">Tarek,<br>I made something for you…</h1>
+    <div class="intro-line" aria-hidden="true"></div>
+    <p class="subtitle">A little piece of my heart,<br>wrapped in pixels and light.</p>
+    <p class="intro-signature">— from <span class="name">Maria Lyahoudia</span></p>
+    <button class="btn btn-primary" id="btn-open" type="button">Open it ❤️</button>
+  </div>
+</section>
+
+<!-- ============ MESSAGE (with song link) ============ -->
+<section id="scene-message" class="scene" aria-label="A message for you">
+  <div class="message-content">
+    <div class="message-main">I miss you, Tarek…</div>
+    <div class="message-reveal" id="message-reveal"></div>
+
+    <a class="song-link"
+       id="song-link"
+       href="https://youtu.be/Dml0JEgRpc0?si=St3ArLdCTBH4uX78"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Play our song on YouTube (opens in a new tab)">
+      <span class="song-link-icon" aria-hidden="true">🎵</span>
+      <span>Play our song</span>
+      <span class="song-link-arrow" aria-hidden="true">↗</span>
+    </a>
+    <p class="song-caption">opens on YouTube</p>
+  </div>
+</section>
+
+<!-- ============ ENVELOPE ============ -->
+<section id="scene-envelope" class="scene" aria-label="A letter for you">
+  <div class="envelope-content">
+    <p class="title-soft">Tarek, I wrote you something…</p>
+    <div class="envelope-wrapper" id="envelope-wrapper" role="button" tabindex="0" aria-label="Open envelope">
+      <div class="envelope">
+        <div class="envelope-flap" id="envelope-flap"></div>
+        <div class="envelope-body">
+          <div class="envelope-letter" id="envelope-letter">
+            <span style="font-size:1.6rem;color:var(--gold)" aria-hidden="true">💌</span>
+          </div>
+        </div>
+        <div class="envelope-seal" id="envelope-seal">M&amp;T</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-open-letter" type="button">Open my letter 💌</button>
+  </div>
+</section>
+
+<!-- ============ LETTER ============ -->
+<section id="scene-letter" class="scene" aria-label="My love letter">
+  <div class="letter-content">
+    <div class="letter-paper">
+      <div class="letter-text">
+        <p class="salutation">My dearest <span class="name">Tarek</span>,</p>
+        <p>I've been thinking about you more than usual lately — which is saying something, because you're always on my mind.</p>
+        <p>I miss the way your laugh fills a room. I miss the quiet moments when we don't need words at all. I miss the way you look at me like I'm the only person in the world.</p>
+        <p>The distance between us feels heavier some days. But even from here, I carry you with me — in my thoughts, in my songs, in the little things that remind me of you.</p>
+        <p>I keep replaying our memories like my favourite film. The way you held my hand. The way you said my name. The way everything felt right when you were near.</p>
+        <p>I can't wait until I see you again. Until then, know that I'm here — missing you, thinking of you, and loving you from afar.</p>
+        <p>You are my favourite thought.</p>
+      </div>
+      <div class="letter-signature">
+        I miss you. ❤️
+        <span class="sign-name">— Maria Lyahoudia</span>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="btn-continue" type="button" style="margin-top:16px">Continue →</button>
+  </div>
+</section>
+
+<!-- ============ ENDING ============ -->
+<section id="scene-ending" class="scene" aria-label="Until I see you again">
+  <div class="ending-content">
+    <div class="ending-message" id="ending-message">Until I see you again, Tarek…</div>
+    <div class="ending-sub" id="ending-sub">I'll keep missing you. ❤️</div>
+    <div class="ending-names" id="ending-names">
+      <span>Maria Lyahoudia</span><span class="amp">&amp;</span><span>Tarek Bhb</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  var BALLOON_COUNT = 6;
+  var SONG_URL = 'https://youtu.be/Dml0JEgRpc0?si=St3ArLdCTBH4uX78';
+
+  function $(id){ return document.getElementById(id); }
+
+  var scenes = {
+    INTRO:    $('scene-intro'),
+    MESSAGE:  $('scene-message'),
+    ENVELOPE: $('scene-envelope'),
+    LETTER:   $('scene-letter'),
+    ENDING:   $('scene-ending')
+  };
+  var btnOpen        = $('btn-open');
+  var btnOpenLetter  = $('btn-open-letter');
+  var btnContinue    = $('btn-continue');
+  var messageReveal  = $('message-reveal');
+  var envelopeWrap   = $('envelope-wrapper');
+  var envelopeFlap   = $('envelope-flap');
+  var envelopeLetter = $('envelope-letter');
+  var envelopeSeal   = $('envelope-seal');
+  var endingMessage  = $('ending-message');
+  var endingSub      = $('ending-sub');
+  var endingNames    = $('ending-names');
+  var songLink       = $('song-link');
+
+  var currentScene = 'INTRO';
+  var isTransitioning = false;
+  var envelopeAnimating = false;
+  var envelopeOpened = false;
+  var typingTimer = null;
+  var balloonsSpawned = false;
+  var timeouts = [];
+
+  function later(fn, ms) {
+    var id = setTimeout(function () {
+      try { fn(); } catch (e) { console.error('[task]', e); }
+    }, ms);
+    timeouts.push(id);
+    return id;
+  }
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia &&
+             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { return false; }
+  }
+
+  function onTap(el, handler) {
+    if (!el) { console.warn('onTap: element missing'); return; }
+    var last = 0;
+    function fire(e) {
+      var now = Date.now();
+      if (now - last < 450) return;
+      last = now;
+      try { handler(e); }
+      catch (err) { console.error('[tap]', err); }
+    }
+    el.addEventListener('click', fire, false);
+    el.addEventListener('touchend', function (e) {
+      var t = e.changedTouches && e.changedTouches[0];
+      if (t && el._startY !== undefined && Math.abs(t.clientY - el._startY) > 10) {
+        return;
+      }
+      if (e.cancelable) e.preventDefault();
+      fire(e);
+    }, { passive: false });
+    el.addEventListener('touchstart', function (e) {
+      var t = e.touches && e.touches[0];
+      if (t) el._startY = t.clientY;
+    }, { passive: true });
+  }
+
+  function goToScene(name) {
+    if (!scenes[name]) { console.warn('unknown scene:', name); return; }
+    if (name === currentScene) return;
+    if (isTransitioning) return;
+    isTransitioning = true;
+    try {
+      if (scenes[currentScene]) scenes[currentScene].classList.remove('active');
+      scenes[name].classList.add('active');
+      currentScene = name;
+      later(function () { isTransitioning = false; }, 800);
+      onSceneEnter(name);
+    } catch (e) {
+      console.error('[goToScene]', e);
+      isTransitioning = false;
+    }
+  }
+
+  function onSceneEnter(name) {
+    if (name === 'MESSAGE')  startMessageReveal();
+    if (name === 'ENDING')   runEndingSequence();
+    if (name === 'ENVELOPE') resetEnvelope();
+  }
+
+  function startMessageReveal() {
+    if (!messageReveal) return;
+    if (typingTimer) { clearInterval(typingTimer); typingTimer = null; }
+    messageReveal.textContent = '';
+    var full = 'More than I know how to explain.';
+    var i = 0;
+    later(function () {
+      typingTimer = setInterval(function () {
+        if (i >= full.length) {
+          clearInterval(typingTimer); typingTimer = null; return;
+        }
+        messageReveal.textContent = full.slice(0, ++i);
+      }, 55);
+    }, 500);
+    later(function () { goToScene('ENVELOPE'); }, 6000);
+  }
+
+  function resetEnvelope() {
+    if (envelopeFlap)   envelopeFlap.classList.remove('open');
+    if (envelopeLetter) envelopeLetter.classList.remove('revealed');
+    if (envelopeSeal)   envelopeSeal.classList.remove('hidden');
+    envelopeOpened = false;
+    envelopeAnimating = false;
+  }
+
+  function openEnvelope() {
+    if (envelopeAnimating || envelopeOpened) return;
+    envelopeAnimating = true;
+    envelopeOpened = true;
+    try {
+      if (envelopeSeal)   envelopeSeal.classList.add('hidden');
+      if (envelopeFlap)   envelopeFlap.classList.add('open');
+      later(function () {
+        if (envelopeLetter) envelopeLetter.classList.add('revealed');
+      }, 500);
+      later(function () {
+        envelopeAnimating = false;
+        goToScene('LETTER');
+      }, 1700);
+    } catch (e) {
+      console.error('[openEnvelope]', e);
+      envelopeAnimating = false;
+      goToScene('LETTER');
+    }
+  }
+
+  function runEndingSequence() {
+    try {
+      if (endingMessage) endingMessage.classList.add('visible');
+      later(function () { if (endingSub)   endingSub.classList.add('visible'); }, 800);
+      later(function () { if (endingNames) endingNames.classList.add('visible'); }, 1200);
+      if (!balloonsSpawned && !prefersReducedMotion()) {
+        balloonsSpawned = true;
+        spawnBalloons();
+      }
+    } catch (e) { console.error('[ending]', e); }
+  }
+
+  function spawnBalloons() {
+    var colors = ['#b8c4b8','#e3d5b8','#c9b38b','#d9d0c4','#a3b3a3','#e8d8c0'];
+    for (var i = 0; i < BALLOON_COUNT; i++) {
+      (function (idx) {
+        later(function () {
+          var b = document.createElement('div');
+          b.className = 'balloon';
+          var size = 50 + Math.random() * 40;
+          b.style.width = size + 'px';
+          b.style.height = (size * 1.25) + 'px';
+          b.style.left = (5 + Math.random() * 90) + '%';
+          b.style.animationDelay = (Math.random() * 3) + 's';
+          b.style.animationDuration = (11 + Math.random() * 4) + 's';
+
+          var body = document.createElement('div');
+          body.className = 'balloon-body';
+          body.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,.5), ' + colors[idx % colors.length] + ')';
+
+          var str = document.createElement('div');
+          str.className = 'balloon-string';
+
+          body.appendChild(str);
+          b.appendChild(body);
+          document.body.appendChild(b);
+
+          setTimeout(function () {
+            if (b.parentNode) b.parentNode.removeChild(b);
+          }, 18000);
+        }, idx * 350);
+      })(i);
+    }
+  }
+
+  /* ---------- WIRING ---------- */
+
+  onTap(btnOpen, function () {
+    goToScene('MESSAGE');
+  });
+
+  onTap(btnOpenLetter, function () {
+    openEnvelope();
+  });
+
+  onTap(envelopeWrap, function () {
+    openEnvelope();
+  });
+
+  onTap(btnContinue, function () {
+    goToScene('ENDING');
+  });
+
+  if (envelopeWrap) {
+    envelopeWrap.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openEnvelope();
+      }
+    });
+  }
+
+  /* Song link safety net — guarantee it opens in a new tab */
+  if (songLink) {
+    songLink.addEventListener('click', function (e) {
+      try {
+        var href = songLink.getAttribute('href');
+        if (!href || href === '#') {
+          e.preventDefault();
+          window.open(SONG_URL, '_blank', 'noopener,noreferrer');
+        }
+      } catch (err) { console.warn('[song-link]', err); }
+    }, false);
+  }
+
+  /* Prevent body scroll except inside letter */
+  document.addEventListener('touchmove', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('.letter-paper')) return;
+    if (e.touches && e.touches.length > 1) return;
+    if (e.cancelable) e.preventDefault();
+  }, { passive: false });
+
+})();
+</script>
+</body>
+</html>
